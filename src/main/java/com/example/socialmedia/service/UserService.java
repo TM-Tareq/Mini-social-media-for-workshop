@@ -3,6 +3,7 @@ package com.example.socialmedia.service;
 import com.example.socialmedia.dto.UserRequestDTO;
 import com.example.socialmedia.dto.UserResponseDTO;
 import com.example.socialmedia.entity.User;
+import com.example.socialmedia.exception.CustomException;
 import com.example.socialmedia.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +33,7 @@ public class UserService {
     }
 
     public UserResponseDTO getUserById(Long id) {
-        User user = userRepository.findById(id).orElseThrow(()-> new RuntimeException("User not found!"));
+        User user = userRepository.findById(id).orElseThrow(()-> new CustomException("User not found!"));
 
         UserResponseDTO response = new UserResponseDTO();
         response.setId(user.getId());
@@ -44,7 +45,7 @@ public class UserService {
     }
 
     public UserResponseDTO updateUserBio(Long id, String bio) {
-        User user = userRepository.findById(id).orElseThrow(()-> new RuntimeException("User not found!"));
+        User user = userRepository.findById(id).orElseThrow(()-> new CustomException("User not found!"));
         user.setBio(bio);
 
         User updatedUser = userRepository.save(user);
